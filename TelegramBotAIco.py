@@ -1,5 +1,7 @@
 import telebot
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key="OPENAI_API_KEY")
 import os
 
 
@@ -7,7 +9,6 @@ import os
 # Telegram Bot Token
 TOKEN = 'TOKEN'
 # OpenAI API Key
-openai.api_key = "OPENAI_API_KEY"
 
 
 # Create a new Telebot instance
@@ -16,11 +17,9 @@ bot = telebot.TeleBot(TOKEN)
 
 # Function to interact with the OpenAI GPT-3 model
 def ask_gpt3(question):
-    response = openai.Completion.create(
-        engine="gpt-3.5-turbo",
-        prompt=question,
-        max_tokens=50
-    )
+    response = client.completions.create(engine="gpt-3.5-turbo",
+    prompt=question,
+    max_tokens=50)
     return response.choices[0].text.strip()
 
 
